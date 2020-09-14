@@ -5,7 +5,8 @@ port = 587
 host = 'smtp.gmail.com'
 
 
-def send_email(content):
+def send_email(subject, body):
+    content = f'Subject: {subject}\n\n{body}'
     with smtplib.SMTP(host, port) as smtp:
         smtp.starttls()
         smtp.login(cred.sender_email, cred.app_pw)
