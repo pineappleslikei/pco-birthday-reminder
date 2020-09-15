@@ -1,5 +1,5 @@
 # planning center service IDs
-service_ids = []
+service_ids = {}
 
 # planning center team IDs
 team_ids = []
