@@ -20,7 +20,7 @@ def bday_priority(name, birthday, next_user_plan):
             if birthday < week_plus_1:
                 bday_scheduled.update({name: birthday})
 
-
+# builds a text string of reminders for team members who's birthdays will happen before their next scheduled plan
 def body_builder_catch(dict_of_bdays):
     bday_catch = []
     for name, bday in dict_of_bdays.items():
@@ -29,7 +29,7 @@ def body_builder_catch(dict_of_bdays):
     bday_str = "".join(bday_catch)
     return bday_str
 
-
+# builds a text string of reminders for team members who are scheduled the next plan and will have their birthday before their next plan
 def body_builder_sched(dict_of_bdays):
     bday_catch = []
     for name, bday in dict_of_bdays.items():
