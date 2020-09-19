@@ -11,8 +11,8 @@ p.get_next_plan(pco.service_ids['Elevate'])
 for x, y in p.tech_team.items():
     name = x
     birthday = y['birthday']
-    next_plan = y['next plan']
-    dc.bday_priority(name, birthday, next_plan)
+    next_plans = y['next plan']
+    dc.bday_priority(name, birthday, next_plans)
 
 
 this_plan_bdays = dc.body_builder_sched(dc.bday_scheduled)
