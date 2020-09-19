@@ -2,6 +2,10 @@ import pco as p
 import pco_config as pco
 import date_comp as dc
 import credentials as cred
+import chemail as che
+from datetime import datetime
+
+today = datetime.today().strftime('%m-%d-%Y')
 
 for team_id in pco.team_ids:
     p.get_team_members(team_id)
@@ -28,4 +32,5 @@ def body_assemble():
 
 
 body = body_assemble()
-print(body)
+subject = f'Weekly Birthday Report({today})'
+che.send_email(subject, body)
