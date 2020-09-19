@@ -3,24 +3,30 @@ import pco_config as pco
 import date_comp as dc
 import credentials as cred
 import chemail as che
+import scheduler as sched
 from datetime import datetime
 
 today = datetime.today().strftime('%m-%d-%Y')
 
-for team_id in pco.team_ids:
-    p.get_team_members(team_id)
-
-p.get_next_plan(pco.service_ids['Elevate'])
-
-for x, y in p.tech_team.items():
-    name = x
-    birthday = y['birthday']
-    next_plans = y['next plan']
-    dc.bday_priority(name, birthday, next_plans)
+# schedule_day should equal the day you want the app to run each week, starting with 0 on Monday
+schedule_day = 0
+scheduled = sched.schedule_check(schedule_day)
 
 
-this_plan_bdays = dc.body_builder_sched(dc.bday_scheduled)
-this_week_bdays = dc.body_builder_catch(dc.bday_before_weekend)
+def main():
+    for team_id in pco.team_ids:
+        p.get_team_members(team_id)
+
+    p.get_next_plan(pco.service_ids['Elevate'])
+
+    for x, y in p.tech_team.items():
+        name = x
+        birthday = y['birthday']
+        next_plans = y['next plan']
+        dc.bday_priority(name, birthday, next_plans)
+
+    this_plan_bdays = dc.body_builder_sched(dc.bday_scheduled)
+    this_week_bdays = dc.body_builder_catch(dc.bday_before_weekend)
 
 
 def body_assemble():
@@ -31,6 +37,8 @@ def body_assemble():
     return body
 
 
-body = body_assemble()
-subject = f'Weekly Birthday Report({today})'
-che.send_email(subject, body)
+if scheduled == True:
+    main()
+    body = body_assemble()
+    subject = f'Weekly Birthday Report({today})'
+    che.send_email(subject, body)
