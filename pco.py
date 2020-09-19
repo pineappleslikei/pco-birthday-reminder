@@ -9,15 +9,16 @@ next_plans = {}
 weekend_team = []
 
 
-def get_user_next_plan(person_id):
+def get_user_next_plans(person_id):
+    next_plans_dates = []
     response = requests.get(
         base_url + f'people/{person_id}/schedules', auth=(cred.pco_app_id, cred.pco_key)).json()
     if len(response['data']) > 0:
-        next_plan_date = datetime.strptime(
-            response['data'][0]['attributes']['sort_date'], '%Y-%m-%dT%H:%M:%S%z').replace(tzinfo=None)
-        return next_plan_date
-    else:
-        return None
+        for plan in response['data']:
+            plan_date = datetime.strptime(
+                response['data'][0]['attributes']['sort_date'], '%Y-%m-%dT%H:%M:%S%z').replace(tzinfo=None)
+            next_plans_dates.append(plan_date)
+    return next_plans_dates
 
 
 def get_team_members(team_id):
@@ -32,7 +33,7 @@ def get_team_members(team_id):
             current_bday = datetime.strptime(
                 person_bday, '%Y-%m-%d').replace(year=datetime.today().year)
             tech_team.update(
-                {person_name: {'id': person_id, 'birthday': current_bday, 'next plan': get_user_next_plan(person_id)}})
+                {person_name: {'id': person_id, 'birthday': current_bday, 'next plan': get_user_next_plans(person_id)}})
 
 
 def get_next_plan(service_id):
