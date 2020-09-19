@@ -25,9 +25,6 @@ def main():
         next_plans = y['next plan']
         dc.bday_priority(name, birthday, next_plans)
 
-    this_plan_bdays = dc.body_builder_sched(dc.bday_scheduled)
-    this_week_bdays = dc.body_builder_catch(dc.bday_before_weekend)
-
 
 def body_assemble():
     if len(this_week_bdays) or len(this_plan_bdays) > 0:
@@ -39,6 +36,8 @@ def body_assemble():
 
 if scheduled == True:
     main()
+    this_plan_bdays = dc.body_builder_sched(dc.bday_scheduled)
+    this_week_bdays = dc.body_builder_catch(dc.bday_before_weekend)
     body = body_assemble()
     subject = f'Weekly Birthday Report({today})'
     che.send_email(subject, body)
