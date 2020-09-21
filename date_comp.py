@@ -15,7 +15,7 @@ next_elevate_plan = p.get_next_plan(pco.service_ids['Elevate'])
 
 
 def bday_priority(name, birthday, next_user_plans):
-    if today < birthday and birthday <= next_elevate_plan:
+    if today <= birthday and birthday <= next_elevate_plan:
         if len(next_user_plans) > 0:
             if next_user_plans[0] != next_elevate_plan:
                 bday_before_weekend.update({name: birthday})
