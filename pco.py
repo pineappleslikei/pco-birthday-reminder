@@ -16,7 +16,7 @@ def get_user_next_plans(person_id):
     if len(response['data']) > 0:
         for plan in response['data']:
             plan_date = datetime.strptime(
-                response['data'][0]['attributes']['sort_date'], '%Y-%m-%dT%H:%M:%S%z').replace(tzinfo=None)
+                response['data'][0]['attributes']['sort_date'][0:10], '%Y-%m-%d')
             next_plans_dates.append(plan_date)
     return next_plans_dates
 
@@ -41,6 +41,6 @@ def get_next_plan(service_id):
         base_url + f'service_types/{service_id}/plans?filter=future&per_page=1', auth=(cred.pco_app_id, cred.pco_key)).json()
     if len(response['data']) > 0:
         next_plan_date = datetime.strptime(
-            response['data'][0]['attributes']['sort_date'], '%Y-%m-%dT%H:%M:%S%z').replace(tzinfo=None)
+            response['data'][0]['attributes']['sort_date'][0:10], '%Y-%m-%d')
         next_plan_id = response['data'][0]['id']
         return next_plan_date
