@@ -16,19 +16,17 @@ next_elevate_plan = p.get_next_plan(pco.service_ids['Elevate'])
 
 def bday_priority(name, birthday, next_user_plans):
     if today <= birthday and birthday <= next_elevate_plan:
-        if len(next_user_plans) > 0:
-            if next_user_plans[0] != next_elevate_plan:
-                bday_before_weekend.update({name: birthday})
-        else:
-            bday_before_weekend.update({name: birthday})
+        bday_before_weekend.update({name: birthday})
     if len(next_user_plans) > 0:
         # checks if the team member is serving the upcoming weekend
         if next_user_plans[0] == next_elevate_plan:
             try:
-                if today < birthday and birthday < next_user_plans[1]:
+                # if bday is between this weeks plan and their next scheduled plan, add to email
+                if next_user_plans[0] < birthday < next_user_plans[1]:
                     bday_scheduled.update({name: birthday})
             except IndexError:
-                if today < birthday and next_user_plans[0] <= birthday:
+                # catches users without a second upcoming plan. if bday is after this weeks plan but within 2 months, add to email
+                if today < birthday and next_user_plans[0] < birthday < (today + timedelta(weeks=8)):
                     bday_scheduled.update({name: birthday})
 
 # builds a text string of reminders for team members who's birthdays will happen before their next scheduled plan
