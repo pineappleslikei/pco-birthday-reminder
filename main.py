@@ -16,7 +16,6 @@ scheduled = sched.schedule_check(schedule_day)
 def main():
     for team_id in pco.team_ids:
         p.get_team_members(team_id)
-
     p.get_next_plan(pco.service_ids['Elevate'])
 
     for x, y in p.tech_team.items():
@@ -34,7 +33,7 @@ def body_assemble():
     return body
 
 
-if scheduled == True:
+if scheduled:
     main()
     this_plan_bdays = dc.body_builder_sched(dc.bday_scheduled)
     this_week_bdays = dc.body_builder_catch(dc.bday_before_weekend)
