@@ -16,7 +16,7 @@ def get_user_next_plans(person_id):
     if len(response['data']) > 0:
         for plan in response['data']:
             plan_date = datetime.strptime(
-                response['data'][0]['attributes']['sort_date'][0:10], '%Y-%m-%d')
+                plan['attributes']['sort_date'][0:10], '%Y-%m-%d')
             next_plans_dates.append(plan_date)
     return next_plans_dates
 
