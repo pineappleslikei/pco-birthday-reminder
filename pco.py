@@ -30,8 +30,13 @@ def get_team_members(team_id):
         # if someone hasn't set their birthday it will be saved as "None"
         person_bday = person['attributes']['birthdate']
         if person_bday != None:
-            current_bday = datetime.strptime(
-                person_bday, '%Y-%m-%d').replace(year=datetime.today().year)
+            try:
+                current_bday = datetime.strptime(
+                    person_bday, '%Y-%m-%d').replace(year=datetime.today().year)
+            except ValueError:
+                leap_bday = datetime.strptime(person_bday, '%Y-%m-%d')
+                current_bday = (leap_bday - timedelta(days=1)
+                                ).replace(year=datetime.today().year)
             tech_team.update(
                 {person_name: {'id': person_id, 'birthday': current_bday, 'next plan': get_user_next_plans(person_id)}})
 
