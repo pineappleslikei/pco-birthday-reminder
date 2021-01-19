@@ -23,6 +23,7 @@ def main():
         birthday = y['birthday']
         next_plans = y['next plan']
         dc.bday_priority(name, birthday, next_plans)
+    print('Team Aquired')
 
 
 def body_assemble():
@@ -34,9 +35,11 @@ def body_assemble():
 
 
 if scheduled:
+    print('Schedule Aquired')
     main()
     this_plan_bdays = dc.body_builder_sched(dc.bday_scheduled)
     this_week_bdays = dc.body_builder_catch(dc.bday_before_weekend)
     body = body_assemble()
     subject = f'Weekly Birthday Report({today})'
+    print('Email Constructed. Sending now.')
     che.send_email(subject, body)
