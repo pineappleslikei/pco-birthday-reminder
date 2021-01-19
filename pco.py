@@ -1,8 +1,9 @@
 import requests
 import pco_config as pco
 import credentials as cred
-from datetime import datetime
+from datetime import datetime, timedelta
 
+today = datetime.today()
 base_url = 'https://api.planningcenteronline.com/services/v2/'
 tech_team = {}
 next_plans = {}
@@ -30,15 +31,31 @@ def get_team_members(team_id):
         # if someone hasn't set their birthday it will be saved as "None"
         person_bday = person['attributes']['birthdate']
         if person_bday != None:
-            try:
-                current_bday = datetime.strptime(
-                    person_bday, '%Y-%m-%d').replace(year=datetime.today().year)
-            except ValueError:
-                leap_bday = datetime.strptime(person_bday, '%Y-%m-%d')
-                current_bday = (leap_bday - timedelta(days=1)
-                                ).replace(year=datetime.today().year)
+            next_bday = leap_check1(person_bday)
+            if next_bday < today:
+                next_bday = leap_check2(next_bday)
             tech_team.update(
-                {person_name: {'id': person_id, 'birthday': current_bday, 'next plan': get_user_next_plans(person_id)}})
+                {person_name: {'id': person_id, 'birthday': next_bday, 'next plan': get_user_next_plans(person_id)}})
+
+
+def leap_check1(dt_bday_obj):
+    try:
+        current_bday = datetime.strptime(
+            dt_bday_obj, '%Y-%m-%d').replace(year=datetime.today().year)
+    except ValueError:
+        leap_bday = datetime.strptime(dt_bday_obj, '%Y-%m-%d')
+        current_bday = (leap_bday - timedelta(days=1)
+                        ).replace(year=datetime.today().year)
+    return current_bday
+
+
+def leap_check2(dt_bday_obj):
+    try:
+        already_bday = dt_bday_obj.replace(year=next_bday.year + 1)
+    except ValueError:
+        already_bday = (dt_bday_obj - timedelta(days=1)
+                        ).replace(year=next_bday.year + 1)
+    return already_bday
 
 
 def get_next_plan(service_id):
@@ -49,3 +66,9 @@ def get_next_plan(service_id):
             response['data'][0]['attributes']['sort_date'][0:10], '%Y-%m-%d')
         next_plan_id = response['data'][0]['id']
         return next_plan_date
+
+
+next_bday = datetime(2020, 2, 29, 0, 0)
+if next_bday < today:
+    next_bday = leap_check2(next_bday)
+    print(next_bday)
