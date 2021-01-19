@@ -1,7 +1,7 @@
 # Thanks for checking out pco-birthday-reminder!
 
-This application will generate an email reminder indicating any upcoming team birthdays. These birthdays fall into 2 categories:  
-1. occur this week before the next plan dates  
+This application will generate an email reminder indicating any upcoming team birthdays. These birthdays fall into 2 categories:
+1. occur this week before the next plan dates
 2. the person is scheduled this weekend and its the last time before their birthday
 
 pco-birthday-reminder is intended to be deployed on a cloud service where it can be a scheduled task.
