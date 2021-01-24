@@ -10,7 +10,9 @@ The scheduler module is included for services such as "pythonanywhere" that migh
 
 ## Getting Started
 #### You'll need:
-1. Planning Center Account
-    Generate an app id and key at https://api.planningcenteronline.com/oauth/applications.
-2. Gmail Account
-    Go to "google->account->security->signing into google->app passwords" and generate an app password. Drop both of these into their respective places in the credentials module.
+1. Planning Center Account:
+    * Generate an app id and key at https://api.planningcenteronline.com/oauth/applications.
+2. Gmail Account:
+    * Go to "google->account->security->signing into google->app passwords"
+    * Generate an app password
+    * Drop both of these into their respective places in the credentials module
