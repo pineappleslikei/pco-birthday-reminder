@@ -66,9 +66,3 @@ def get_next_plan(service_id):
             response['data'][0]['attributes']['sort_date'][0:10], '%Y-%m-%d')
         next_plan_id = response['data'][0]['id']
         return next_plan_date
-
-
-next_bday = datetime(2020, 2, 29, 0, 0)
-if next_bday < today:
-    next_bday = leap_check2(next_bday)
-    print(next_bday)
