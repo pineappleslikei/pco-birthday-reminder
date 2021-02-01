@@ -51,10 +51,10 @@ def leap_check1(dt_bday_obj):
 
 def leap_check2(dt_bday_obj):
     try:
-        already_bday = dt_bday_obj.replace(year=next_bday.year + 1)
+        already_bday = dt_bday_obj.replace(year=dt_bday_obj.year + 1)
     except ValueError:
         already_bday = (dt_bday_obj - timedelta(days=1)
-                        ).replace(year=next_bday.year + 1)
+                        ).replace(year=dt_bday_obj.year + 1)
     return already_bday
 
 
